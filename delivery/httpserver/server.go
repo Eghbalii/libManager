@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"log"
 
-	bookhandler "github.com/eghbalii/libManager/httpserver/bookHandler"
-	"github.com/eghbalii/libManager/httpserver/userhandler"
+	bookhandler "github.com/eghbalii/libManager/delivery/httpserver/bookHandler"
+	"github.com/eghbalii/libManager/delivery/httpserver/userhandler"
 	"github.com/eghbalii/libManager/service/authservice"
 	"github.com/eghbalii/libManager/service/bookservice"
 	"github.com/eghbalii/libManager/service/userservice"

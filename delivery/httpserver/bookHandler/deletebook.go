@@ -1,10 +1,11 @@
 package bookhandler
 
 import (
+	"context"
 	"net/http"
 
+	"github.com/eghbalii/libManager/contract/goproto/book"
 	"github.com/labstack/echo/v4"
-	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 func (h Handler) DeleteBook(e echo.Context) error {
@@ -12,11 +13,8 @@ func (h Handler) DeleteBook(e echo.Context) error {
 	if bookID == "" {
 		return e.JSON(http.StatusBadRequest, echo.Map{"error": "bookID is required"})
 	}
-	bookObjectID, err := primitive.ObjectIDFromHex(bookID)
-	if err != nil {
-		return e.JSON(http.StatusBadRequest, echo.Map{"error": "invalid bookID"})
-	}
-	err = h.bookSvc.DeleteBook(bookObjectID)
+
+	_, err := h.grpcClient.DeleteBook(context.Background(), &book.DeleteBookRequest{BookID: bookID})
 	if err != nil {
 		return e.JSON(http.StatusInternalServerError, err)
 	}

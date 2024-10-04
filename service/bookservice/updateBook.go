@@ -15,10 +15,10 @@ func (s Service) UpdateBook(b param.UpdateBookRequest) (param.UpdateBookResponse
 	if b.Author != "" {
 		book.Author = b.Author
 	}
-	if b.Publisher != "" {
+	if b.ISBN != "" {
 		book.ISBN = b.ISBN
 	}
-	if b.PublishDate != "" {
+	if b.Publisher != "" {
 		book.Publisher = b.Publisher
 	}
 	if b.PublishDate != "" {

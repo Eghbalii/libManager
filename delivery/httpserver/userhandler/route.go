@@ -1,7 +1,7 @@
 package userhandler
 
 import (
-	"github.com/eghbalii/libManager/httpserver/middleware"
+	"github.com/eghbalii/libManager/delivery/httpserver/middleware"
 	"github.com/labstack/echo/v4"
 )
 

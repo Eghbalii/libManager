@@ -1,11 +1,11 @@
 package bookvalidator
 
 import (
-	"github.com/eghbalii/libManager/param"
+	"github.com/eghbalii/libManager/contract/goproto/book"
 	validation "github.com/go-ozzo/ozzo-validation/v4"
 )
 
-func (v Validator) ValidateAddBookRequest(req param.AddBookRequest) (map[string]string, error) {
+func (v Validator) ValidateAddBookRequest(req book.Book) (map[string]string, error) {
 	if err := validation.ValidateStruct(&req,
 		validation.Field(&req.Title, validation.Required, validation.Length(3, 100)),
 		validation.Field(&req.Author, validation.Required),

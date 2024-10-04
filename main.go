@@ -3,7 +3,7 @@ package main
 import (
 	"time"
 
-	"github.com/eghbalii/libManager/httpserver"
+	"github.com/eghbalii/libManager/delivery/httpserver"
 	"github.com/eghbalii/libManager/repository/mongo"
 	"github.com/eghbalii/libManager/repository/mongo/mongobook"
 	"github.com/eghbalii/libManager/repository/mongo/mongouser"
