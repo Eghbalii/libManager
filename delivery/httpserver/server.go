@@ -5,10 +5,12 @@ import (
 	"log"
 
 	bookhandler "github.com/eghbalii/libManager/delivery/httpserver/bookHandler"
+	searchhandler "github.com/eghbalii/libManager/delivery/httpserver/searchHandler"
 	"github.com/eghbalii/libManager/delivery/httpserver/userhandler"
 	"github.com/eghbalii/libManager/service/authorizationservice"
 	"github.com/eghbalii/libManager/service/authservice"
 	"github.com/eghbalii/libManager/service/bookservice"
+	"github.com/eghbalii/libManager/service/searchservice"
 	"github.com/eghbalii/libManager/service/userservice"
 	"github.com/eghbalii/libManager/validator/bookvalidator"
 	"github.com/eghbalii/libManager/validator/uservalidator"
@@ -17,20 +19,23 @@ import (
 )
 
 type Server struct {
-	userHandler userhandler.Handler
-	bookHandler bookhandler.Handler
-	Router      *echo.Echo
+	userHandler   userhandler.Handler
+	bookHandler   bookhandler.Handler
+	searchHandler searchhandler.Handler
+	Router        *echo.Echo
 }
 
 func New(authSvc authservice.Service, authorizationSvc authorizationservice.Service, userSvc userservice.Service, userValidator uservalidator.Validator,
-	bookSvc bookservice.Service, bookValidator bookvalidator.Validator) Server {
+	bookSvc bookservice.Service, bookValidator bookvalidator.Validator, searchSvc searchservice.Service) Server {
 	e := echo.New()
 	userHandler := userhandler.New(authSvc, userSvc, userValidator)
 	bookHandler := bookhandler.New(authSvc, authorizationSvc, bookSvc, bookValidator)
+	searchHandler := searchhandler.New(authSvc, searchSvc)
 	return Server{
-		userHandler: userHandler,
-		bookHandler: bookHandler,
-		Router:      e,
+		userHandler:   userHandler,
+		bookHandler:   bookHandler,
+		searchHandler: searchHandler,
+		Router:        e,
 	}
 }
 
@@ -41,6 +46,7 @@ func (s Server) Serve(port int) {
 
 	s.userHandler.SetRoutes(s.Router)
 	s.bookHandler.SetRoutes(s.Router)
+	s.searchHandler.SetRoutes(s.Router)
 
 	// start server
 	address := fmt.Sprintf(":%d", port)

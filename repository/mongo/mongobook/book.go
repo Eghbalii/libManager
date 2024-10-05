@@ -6,12 +6,26 @@ import (
 	"github.com/eghbalii/libManager/entity"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
+	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 func (d DB) AddBook(b entity.Book) (entity.Book, error) {
 	bookCollection := d.conn.Database("libManager").Collection("book")
 
-	_, err := bookCollection.InsertOne(context.Background(), b)
+	// Create index
+	_, err := bookCollection.Indexes().CreateOne(
+		context.Background(),
+		mongo.IndexModel{
+			Keys: bson.M{
+				"title":  "text",
+				"author": "text",
+			},
+			Options: options.Index().SetUnique(true),
+		},
+	)
+
+	_, err = bookCollection.InsertOne(context.Background(), b)
 	if err != nil {
 		return entity.Book{}, err
 	}

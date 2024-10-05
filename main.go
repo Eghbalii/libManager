@@ -6,10 +6,12 @@ import (
 	"github.com/eghbalii/libManager/delivery/httpserver"
 	"github.com/eghbalii/libManager/repository/mongo"
 	"github.com/eghbalii/libManager/repository/mongo/mongobook"
+	"github.com/eghbalii/libManager/repository/mongo/mongosearch"
 	"github.com/eghbalii/libManager/repository/mongo/mongouser"
 	"github.com/eghbalii/libManager/service/authorizationservice"
 	"github.com/eghbalii/libManager/service/authservice"
 	"github.com/eghbalii/libManager/service/bookservice"
+	"github.com/eghbalii/libManager/service/searchservice"
 	"github.com/eghbalii/libManager/service/userservice"
 	"github.com/eghbalii/libManager/validator/bookvalidator"
 	"github.com/eghbalii/libManager/validator/uservalidator"
@@ -18,14 +20,14 @@ import (
 func main() {
 	// http.ListenAndServe(":8090", nil)
 
-	authSvc, authorizationSvc, userSvc, userValidator, bookSvc, bookValidator := setupService()
-	server := httpserver.New(authSvc, authorizationSvc, userSvc, userValidator, bookSvc, bookValidator)
+	authSvc, authorizationSvc, userSvc, userValidator, bookSvc, bookValidator, searchSvc := setupService()
+	server := httpserver.New(authSvc, authorizationSvc, userSvc, userValidator, bookSvc, bookValidator, searchSvc)
 
 	server.Serve(8080)
 }
 
 func setupService() (authservice.Service, authorizationservice.Service, userservice.Service, uservalidator.Validator,
-	bookservice.Service, bookvalidator.Validator) {
+	bookservice.Service, bookvalidator.Validator, searchservice.Service) {
 	mongoClient := mongo.NewClient(27018)
 	authSvc := authservice.New(authservice.Config{
 		SignKey:              "jwt_secret",
@@ -44,5 +46,9 @@ func setupService() (authservice.Service, authorizationservice.Service, userserv
 	bookValidator := bookvalidator.New(bookMongoRepo)
 	authorizationservice := authorizationservice.New(bookMongoRepo)
 
-	return authSvc, authorizationservice, userSvc, userValidator, bookSvc, bookValidator
+	// search
+	searchMongoRepo := mongosearch.New(mongoClient)
+	searchservice := searchservice.New(searchMongoRepo)
+
+	return authSvc, authorizationservice, userSvc, userValidator, bookSvc, bookValidator, searchservice
 }
