@@ -12,6 +12,9 @@ type Repository interface {
 	DeleteBookByID(bookID primitive.ObjectID) error
 	UpdateBookByID(bookID primitive.ObjectID, b entity.Book) (entity.Book, error)
 	ListAllBooks() ([]entity.Book, error)
+	BorrowBook(bookID primitive.ObjectID, borrowerID primitive.ObjectID) error
+	ReturnBook(bookID primitive.ObjectID) error
+	ReserveBook(bookID primitive.ObjectID, reserverID primitive.ObjectID) error
 }
 
 type Service struct {

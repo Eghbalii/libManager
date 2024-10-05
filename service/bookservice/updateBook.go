@@ -1,6 +1,7 @@
 package bookservice
 
 import (
+	"github.com/eghbalii/libManager/entity"
 	"github.com/eghbalii/libManager/param"
 )
 
@@ -23,6 +24,9 @@ func (s Service) UpdateBook(b param.UpdateBookRequest) (param.UpdateBookResponse
 	}
 	if b.PublishDate != "" {
 		book.PublishDate = b.PublishDate
+	}
+	if b.Status != "" {
+		book.Status = entity.MapToBookStatusEntity(b.Status)
 	}
 
 	book, err = s.repo.UpdateBookByID(book.ID, book)

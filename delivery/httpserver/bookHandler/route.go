@@ -13,4 +13,8 @@ func (h Handler) SetRoutes(e *echo.Echo) {
 		middleware.AccessCheck(h.authorizationservice, entity.BookUpdatePermission))
 	e.DELETE("/books/", h.DeleteBook, middleware.Auth(h.authSvc),
 		middleware.AccessCheck(h.authorizationservice, entity.BookDeletePermission))
+	//  borrow, return, reserve
+	e.POST("/books/borrow", h.BorrowBook, middleware.Auth(h.authSvc))
+	e.POST("/books/return", h.ReturnBook, middleware.Auth(h.authSvc))
+	e.POST("/books/reserve", h.ReserveBook, middleware.Auth(h.authSvc))
 }

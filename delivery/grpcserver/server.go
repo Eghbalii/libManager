@@ -81,6 +81,10 @@ func (b *Server) GetBooks(ctx context.Context, empty *emptypb.Empty) (*book.GetA
 			Publisher:   b.Publisher,
 			PublishDate: b.PublishDate,
 			Status:      b.Status.String(),
+			Borrower:    b.Borrower.Hex(),
+			Reserver:    b.Reserver.Hex(),
+			BorrowDate:  b.BorrowDate,
+			ReturnDate:  b.ReturnDate,
 		})
 	}
 
@@ -111,7 +115,6 @@ func (b *Server) UpdateBook(ctx context.Context, req *book.Book) (*book.Book, er
 	}, nil
 }
 
-// TODO: handle error
 func (b *Server) DeleteBook(ctx context.Context, req *book.DeleteBookRequest) (*emptypb.Empty, error) {
 	bookID, err := primitive.ObjectIDFromHex(req.BookID)
 	if err != nil {
@@ -119,6 +122,58 @@ func (b *Server) DeleteBook(ctx context.Context, req *book.DeleteBookRequest) (*
 	}
 
 	err = b.svc.DeleteBook(bookID)
+	if err != nil {
+		return nil, err
+	}
+
+	return &emptypb.Empty{}, nil
+}
+
+func (b *Server) BorrowBook(ctx context.Context, req *book.BorrowBookRequest) (*emptypb.Empty, error) {
+	bookID, err := primitive.ObjectIDFromHex(req.BookID)
+	if err != nil {
+		return nil, err
+	}
+
+	borrowerID, err := primitive.ObjectIDFromHex(req.UserID)
+	if err != nil {
+		return nil, err
+	}
+
+	err = b.svc.BorrowBook(bookID, borrowerID)
+	if err != nil {
+		return nil, err
+	}
+
+	return &emptypb.Empty{}, nil
+}
+
+func (b *Server) ReturnBook(ctx context.Context, req *book.ReturnBookRequest) (*emptypb.Empty, error) {
+	bookID, err := primitive.ObjectIDFromHex(req.BookID)
+	if err != nil {
+		return nil, err
+	}
+
+	err = b.svc.ReturnBook(bookID)
+	if err != nil {
+		return nil, err
+	}
+
+	return &emptypb.Empty{}, nil
+}
+
+func (b *Server) ReserveBook(ctx context.Context, req *book.ReserveBookRequest) (*emptypb.Empty, error) {
+	bookID, err := primitive.ObjectIDFromHex(req.BookID)
+	if err != nil {
+		return nil, err
+	}
+
+	reserverID, err := primitive.ObjectIDFromHex(req.UserID)
+	if err != nil {
+		return nil, err
+	}
+
+	err = b.svc.ReserveBook(bookID, reserverID)
 	if err != nil {
 		return nil, err
 	}

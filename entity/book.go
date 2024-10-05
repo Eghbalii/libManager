@@ -10,6 +10,10 @@ type Book struct {
 	Publisher   string             `bson:"publisher"`
 	PublishDate string             `bson:"publish_date"`
 	Status      BookStatus         `bson:"status"`
+	Borrower    primitive.ObjectID `bson:"borrower"`
+	Reserver    primitive.ObjectID `bson:"reserver"`
+	BorrowDate  string             `bson:"borrow_date"`
+	ReturnDate  string             `bson:"return_date"`
 }
 
 type BookStatus uint8

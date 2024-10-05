@@ -6,6 +6,7 @@ type UpdateBookRequest struct {
 	ISBN        string `json:"isbn"`
 	Publisher   string `json:"publisher"`
 	PublishDate string `json:"publish_date"`
+	Status      string `json:"status"`
 }
 
 type UpdateBookResponse struct {

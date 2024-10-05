@@ -13,7 +13,11 @@ message Book {
 	string ISBN  =4;     
 	string Publisher =5;  
 	string PublishDate =6;
-    string	Status   =7;   
+    string	Status   =7;
+    string borrower =8;
+    string reserver =9;
+    string borrowDate = 10;
+    string returnDate =11;   
 }
 
 message GetAllBooksResponse {
@@ -24,10 +28,27 @@ message DeleteBookRequest {
     string BookID =1;
 }
 
+message BorrowBookRequest {
+    string BookID =1;
+    string UserID =2;
+}
+
+message ReserveBookRequest {
+    string BookID =1;
+    string UserID =2;
+}
+
+message ReturnBookRequest {
+    string BookID =1;
+}
+
 service BookService {
   rpc CreateBook(Book) returns (Book);
   rpc GetBooks(google.protobuf.Empty) returns (GetAllBooksResponse);
   rpc UpdateBook(Book) returns (Book);
   rpc DeleteBook(DeleteBookRequest) returns (google.protobuf.Empty);
+  rpc BorrowBook(BorrowBookRequest) returns (google.protobuf.Empty);
+  rpc ReserveBook(ReserveBookRequest) returns (google.protobuf.Empty);
+  rpc ReturnBook(ReturnBookRequest) returns (google.protobuf.Empty);
 }
 
