@@ -24,9 +24,20 @@ func (d DB) BorrowBook(bookID primitive.ObjectID, borrowerID primitive.ObjectID)
 func (d DB) ReturnBook(bookID primitive.ObjectID) error {
 	bookCollection := d.conn.Database("libManager").Collection("book")
 	filter := bson.M{"_id": bookID}
-	update := bson.M{"$set": bson.M{"borrower": primitive.NilObjectID, "status": entity.Available,
-		"borrow_date": "", "return_date": ""}}
-	_, err := bookCollection.UpdateOne(context.Background(), filter, update)
+	book, err := d.GetBookByID(bookID)
+	if err != nil {
+		return err
+	}
+	var update bson.M
+	if book.Status == entity.Borrowed {
+		update = bson.M{"$set": bson.M{"borrower": primitive.NilObjectID, "status": entity.Available,
+			"borrow_date": "", "return_date": ""}}
+	} else if book.Status == entity.Reserved {
+		update = bson.M{"$set": bson.M{"reserver": primitive.NilObjectID, "status": entity.Borrowed,
+			"borrow_date": time.Now().Format("2006-01-02"), "return_date": time.Now().AddDate(0, 0, 7).Format("2006-01-02"),
+			"borrower": book.Reserver}}
+	}
+	_, err = bookCollection.UpdateOne(context.Background(), filter, update)
 	if err != nil {
 		return err
 	}

@@ -6,7 +6,7 @@ import (
 
 	bookhandler "github.com/eghbalii/libManager/delivery/httpserver/bookHandler"
 	searchhandler "github.com/eghbalii/libManager/delivery/httpserver/searchHandler"
-	"github.com/eghbalii/libManager/delivery/httpserver/userhandler"
+	"github.com/eghbalii/libManager/delivery/httpserver/userHandler"
 	"github.com/eghbalii/libManager/service/authorizationservice"
 	"github.com/eghbalii/libManager/service/authservice"
 	"github.com/eghbalii/libManager/service/bookservice"
@@ -19,7 +19,7 @@ import (
 )
 
 type Server struct {
-	userHandler   userhandler.Handler
+	userHandler   userHandler.Handler
 	bookHandler   bookhandler.Handler
 	searchHandler searchhandler.Handler
 	Router        *echo.Echo
@@ -28,7 +28,7 @@ type Server struct {
 func New(authSvc authservice.Service, authorizationSvc authorizationservice.Service, userSvc userservice.Service, userValidator uservalidator.Validator,
 	bookSvc bookservice.Service, bookValidator bookvalidator.Validator, searchSvc searchservice.Service) Server {
 	e := echo.New()
-	userHandler := userhandler.New(authSvc, userSvc, userValidator)
+	userHandler := userHandler.New(authSvc, userSvc, userValidator)
 	bookHandler := bookhandler.New(authSvc, authorizationSvc, bookSvc, bookValidator)
 	searchHandler := searchhandler.New(authSvc, searchSvc)
 	return Server{

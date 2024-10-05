@@ -1,4 +1,4 @@
-package userhandler
+package userHandler
 
 import (
 	"github.com/eghbalii/libManager/delivery/httpserver/middleware"
