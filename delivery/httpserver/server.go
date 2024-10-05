@@ -6,6 +6,7 @@ import (
 
 	bookhandler "github.com/eghbalii/libManager/delivery/httpserver/bookHandler"
 	"github.com/eghbalii/libManager/delivery/httpserver/userhandler"
+	"github.com/eghbalii/libManager/service/authorizationservice"
 	"github.com/eghbalii/libManager/service/authservice"
 	"github.com/eghbalii/libManager/service/bookservice"
 	"github.com/eghbalii/libManager/service/userservice"
@@ -21,11 +22,11 @@ type Server struct {
 	Router      *echo.Echo
 }
 
-func New(authSvc authservice.Service, userSvc userservice.Service, userValidator uservalidator.Validator,
+func New(authSvc authservice.Service, authorizationSvc authorizationservice.Service, userSvc userservice.Service, userValidator uservalidator.Validator,
 	bookSvc bookservice.Service, bookValidator bookvalidator.Validator) Server {
 	e := echo.New()
 	userHandler := userhandler.New(authSvc, userSvc, userValidator)
-	bookHandler := bookhandler.New(authSvc, bookSvc, bookValidator)
+	bookHandler := bookhandler.New(authSvc, authorizationSvc, bookSvc, bookValidator)
 	return Server{
 		userHandler: userHandler,
 		bookHandler: bookHandler,

@@ -14,9 +14,9 @@ func AccessCheck(service authorizationservice.Service,
 	return func(next echo.HandlerFunc) echo.HandlerFunc {
 		return func(c echo.Context) error {
 			claims := c.Get("claims").(*authservice.Claims)
-			isAllowed, err := service.CheckAccess(claims.UserID, claims.Role, permissions...)
+			isAllowed, err := service.CheckAccess(claims.UserID, permissions...)
 			if err != nil {
-				return c.JSON(http.StatusInternalServerError, err)
+				return c.JSON(http.StatusInternalServerError, echo.Map{"error": err.Error()})
 			}
 
 			if !isAllowed {
