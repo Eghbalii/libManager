@@ -6,5 +6,11 @@ services:
       - 27018:27017
     volumes: 
       - mongodb-data:/data/db
+  libManager-app:
+    image: libmanager:1.0.1
+    ports:
+      - 8080:8080
+    
+    
 volumes:
   mongodb-data:
