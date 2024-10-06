@@ -16,7 +16,8 @@ import (
 // @Produce json
 // @Param book body entity.Book true "book"
 // @Success 200 {object} entity.Book
-// Security JWT
+// @Security ApiKeyAuth
+// @param Authorization header string true "Authorization"
 // @Router /books/ [put]
 func (h Handler) UpdateBook(e echo.Context) error {
 	req := new(book.Book)

@@ -16,7 +16,8 @@ import (
 // @Produce json
 // @Param bookID query string true "bookID"
 // @Success 200 {object} string
-// Security JWT
+// @Security ApiKeyAuth
+// @param Authorization header string true "Authorization"
 // @Router /books/ [delete]
 func (h Handler) DeleteBook(e echo.Context) error {
 	bookID := e.QueryParam("bookID")

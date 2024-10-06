@@ -17,7 +17,8 @@ import (
 // @Produce json
 // @Param bookID body string true "bookID"
 // @Success 200 {string} message
-// Security JWT
+// @Security ApiKeyAuth
+// @param Authorization header string true "Authorization"
 // @Router /books/borrow [post]
 func (h Handler) BorrowBook(c echo.Context) error {
 	req := new(book.BorrowBookRequest)
@@ -51,7 +52,8 @@ func (h Handler) BorrowBook(c echo.Context) error {
 // @Produce json
 // @Param bookID body string true "bookID"
 // @Success 200 {string} message
-// Security JWT
+// @Security ApiKeyAuth
+// @param Authorization header string true "Authorization"
 // @Router /books/return [post]
 func (h Handler) ReturnBook(c echo.Context) error {
 	req := new(book.ReturnBookRequest)
@@ -84,7 +86,8 @@ func (h Handler) ReturnBook(c echo.Context) error {
 // @Produce json
 // @Param bookID body string true "bookID"
 // @Success 200 {string} message
-// Security JWT
+// @Security ApiKeyAuth
+// @param Authorization header string true "Authorization"
 // @Router /books/reserve [post]
 func (h Handler) ReserveBook(c echo.Context) error {
 	req := new(book.ReserveBookRequest)

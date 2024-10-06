@@ -21,9 +21,6 @@ import (
 // @version		1.0
 // @description	This is an order Api for LibManager server.
 // @license		Apache 2.0
-// securityDefinitions.apikey JWT
-// @in header
-// @name Authorization
 func main() {
 
 	// e := echo.New()

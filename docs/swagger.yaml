@@ -87,6 +87,12 @@ paths:
       consumes:
       - application/json
       description: List all books
+      parameters:
+      - description: Authorization
+        in: header
+        name: Authorization
+        required: true
+        type: string
       produces:
       - application/json
       responses:
@@ -96,6 +102,8 @@ paths:
             items:
               $ref: '#/definitions/entity.Book'
             type: array
+      security:
+      - ApiKeyAuth: []
       summary: List all books
       tags:
       - book
@@ -131,6 +139,11 @@ paths:
         name: bookID
         required: true
         type: string
+      - description: Authorization
+        in: header
+        name: Authorization
+        required: true
+        type: string
       produces:
       - application/json
       responses:
@@ -138,6 +151,8 @@ paths:
           description: OK
           schema:
             type: string
+      security:
+      - ApiKeyAuth: []
       summary: Delete book
       tags:
       - book
@@ -152,6 +167,11 @@ paths:
         required: true
         schema:
           $ref: '#/definitions/entity.Book'
+      - description: Authorization
+        in: header
+        name: Authorization
+        required: true
+        type: string
       produces:
       - application/json
       responses:
@@ -159,6 +179,8 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/entity.Book'
+      security:
+      - ApiKeyAuth: []
       summary: Update book
       tags:
       - book
@@ -174,6 +196,11 @@ paths:
         required: true
         schema:
           type: string
+      - description: Authorization
+        in: header
+        name: Authorization
+        required: true
+        type: string
       produces:
       - application/json
       responses:
@@ -181,6 +208,8 @@ paths:
           description: OK
           schema:
             type: string
+      security:
+      - ApiKeyAuth: []
       summary: Borrow a book
       tags:
       - book
@@ -196,6 +225,11 @@ paths:
         required: true
         schema:
           type: string
+      - description: Authorization
+        in: header
+        name: Authorization
+        required: true
+        type: string
       produces:
       - application/json
       responses:
@@ -203,6 +237,8 @@ paths:
           description: OK
           schema:
             type: string
+      security:
+      - ApiKeyAuth: []
       summary: Reserve a book
       tags:
       - book
@@ -218,6 +254,11 @@ paths:
         required: true
         schema:
           type: string
+      - description: Authorization
+        in: header
+        name: Authorization
+        required: true
+        type: string
       produces:
       - application/json
       responses:
@@ -225,6 +266,8 @@ paths:
           description: OK
           schema:
             type: string
+      security:
+      - ApiKeyAuth: []
       summary: Return a book
       tags:
       - book
@@ -239,6 +282,11 @@ paths:
         name: author
         required: true
         type: string
+      - description: Authorization
+        in: header
+        name: Authorization
+        required: true
+        type: string
       produces:
       - application/json
       responses:
@@ -248,6 +296,8 @@ paths:
             items:
               $ref: '#/definitions/entity.Book'
             type: array
+      security:
+      - ApiKeyAuth: []
       summary: Search book by author
       tags:
       - search
@@ -262,6 +312,11 @@ paths:
         name: title
         required: true
         type: string
+      - description: Authorization
+        in: header
+        name: Authorization
+        required: true
+        type: string
       produces:
       - application/json
       responses:
@@ -271,6 +326,8 @@ paths:
             items:
               $ref: '#/definitions/entity.Book'
             type: array
+      security:
+      - ApiKeyAuth: []
       summary: Search book by title
       tags:
       - search
@@ -299,6 +356,12 @@ paths:
   /users/profile:
     get:
       description: Get user profile
+      parameters:
+      - description: Authorization
+        in: header
+        name: Authorization
+        required: true
+        type: string
       produces:
       - application/json
       responses:
@@ -307,7 +370,7 @@ paths:
           schema:
             $ref: '#/definitions/param.ProfileResponse'
       security:
-      - JWT: []
+      - ApiKeyAuth: []
       summary: Get user profile
       tags:
       - User

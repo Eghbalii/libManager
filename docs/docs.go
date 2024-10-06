@@ -17,6 +17,11 @@ const docTemplate = `{
     "paths": {
         "/books": {
             "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "List all books",
                 "consumes": [
                     "application/json"
@@ -28,6 +33,15 @@ const docTemplate = `{
                     "book"
                 ],
                 "summary": "List all books",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Authorization",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -75,6 +89,11 @@ const docTemplate = `{
         },
         "/books/": {
             "put": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "Update book by Admin",
                 "consumes": [
                     "application/json"
@@ -95,6 +114,13 @@ const docTemplate = `{
                         "schema": {
                             "$ref": "#/definitions/entity.Book"
                         }
+                    },
+                    {
+                        "type": "string",
+                        "description": "Authorization",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -107,6 +133,11 @@ const docTemplate = `{
                 }
             },
             "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "Delete book by Admin",
                 "consumes": [
                     "application/json"
@@ -125,6 +156,13 @@ const docTemplate = `{
                         "name": "bookID",
                         "in": "query",
                         "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Authorization",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -139,6 +177,11 @@ const docTemplate = `{
         },
         "/books/borrow": {
             "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "Borrow a book",
                 "consumes": [
                     "application/json"
@@ -159,6 +202,13 @@ const docTemplate = `{
                         "schema": {
                             "type": "string"
                         }
+                    },
+                    {
+                        "type": "string",
+                        "description": "Authorization",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -173,6 +223,11 @@ const docTemplate = `{
         },
         "/books/reserve": {
             "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "Reserve a book",
                 "consumes": [
                     "application/json"
@@ -193,6 +248,13 @@ const docTemplate = `{
                         "schema": {
                             "type": "string"
                         }
+                    },
+                    {
+                        "type": "string",
+                        "description": "Authorization",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -207,6 +269,11 @@ const docTemplate = `{
         },
         "/books/return": {
             "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "Return a book",
                 "consumes": [
                     "application/json"
@@ -227,6 +294,13 @@ const docTemplate = `{
                         "schema": {
                             "type": "string"
                         }
+                    },
+                    {
+                        "type": "string",
+                        "description": "Authorization",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -241,6 +315,11 @@ const docTemplate = `{
         },
         "/search/author": {
             "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "Search book by author",
                 "consumes": [
                     "application/json"
@@ -259,6 +338,13 @@ const docTemplate = `{
                         "name": "author",
                         "in": "query",
                         "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Authorization",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -276,6 +362,11 @@ const docTemplate = `{
         },
         "/search/title": {
             "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "Search book by title",
                 "consumes": [
                     "application/json"
@@ -293,6 +384,13 @@ const docTemplate = `{
                         "description": "title",
                         "name": "title",
                         "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Authorization",
+                        "name": "Authorization",
+                        "in": "header",
                         "required": true
                     }
                 ],
@@ -347,7 +445,7 @@ const docTemplate = `{
             "get": {
                 "security": [
                     {
-                        "JWT": []
+                        "ApiKeyAuth": []
                     }
                 ],
                 "description": "Get user profile",
@@ -358,6 +456,15 @@ const docTemplate = `{
                     "User"
                 ],
                 "summary": "Get user profile",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Authorization",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",

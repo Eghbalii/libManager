@@ -14,7 +14,8 @@ import (
 // @Accept json
 // @Produce json
 // @Success 200 {array} entity.Book
-// Security JWT
+// @Security ApiKeyAuth
+// @param Authorization header string true "Authorization"
 // @Router /books [get]
 func (h Handler) ListBooks(e echo.Context) error {
 	books, err := h.grpcClient.GetBooks(context.Background(), nil)

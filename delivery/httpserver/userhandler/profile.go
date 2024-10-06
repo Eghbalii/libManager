@@ -14,9 +14,11 @@ import (
 //	@Description	Get user profile
 //	@Tags			User
 //	@Produce		json
-//	@security		JWT
 //	@Success		200	{object}	param.ProfileResponse
 //	@Router			/users/profile [get]
+//
+// @Security ApiKeyAuth
+// @param Authorization header string true "Authorization"
 func (h Handler) userProfile(c echo.Context) error {
 	claims := c.Get("claims").(*authservice.Claims)
 	resp, err := h.userSvc.Profile(c.Request().Context(),

@@ -14,7 +14,8 @@ import (
 // @Produce json
 // @Param title query string true "title"
 // @Success 200 {array} entity.Book
-// Security JWT
+// @Security ApiKeyAuth
+// @param Authorization header string true "Authorization"
 // @Router /search/title [get]
 func (h Handler) SearchBookByTitle(c echo.Context) error {
 	title := c.QueryParam("title")
@@ -33,7 +34,8 @@ func (h Handler) SearchBookByTitle(c echo.Context) error {
 // @Produce json
 // @Param author query string true "author"
 // @Success 200 {array} entity.Book
-// Security JWT
+// @Security ApiKeyAuth
+// @param Authorization header string true "Authorization"
 // @Router /search/author [get]
 func (h Handler) SearchBookByAuthor(c echo.Context) error {
 	author := c.QueryParam("author")
