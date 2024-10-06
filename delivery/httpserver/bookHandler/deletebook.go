@@ -8,6 +8,16 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
+// DeleteBook Delete book
+// @Summary Delete book
+// @Description Delete book by Admin
+// @Tags book
+// @Accept json
+// @Produce json
+// @Param bookID query string true "bookID"
+// @Success 200 {object} string
+// Security JWT
+// @Router /books/ [delete]
 func (h Handler) DeleteBook(e echo.Context) error {
 	bookID := e.QueryParam("bookID")
 	if bookID == "" {

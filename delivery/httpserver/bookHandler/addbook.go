@@ -8,6 +8,16 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
+// AddBook Add new book
+// @Summary Add new book
+// @Description Add new book
+// @Tags book
+// @Accept json
+// @Produce json
+// @Param book body entity.Book true "book"
+// @Success 201 {object} entity.Book
+// Security JWT
+// @Router /books [post]
 func (h Handler) AddBook(e echo.Context) error {
 	req := new(book.Book)
 	if err := e.Bind(req); err != nil {

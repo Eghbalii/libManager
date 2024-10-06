@@ -1,6 +1,8 @@
 package middleware
 
 import (
+	"log"
+
 	"github.com/eghbalii/libManager/service/authservice"
 	mw "github.com/labstack/echo-jwt/v4"
 	"github.com/labstack/echo/v4"
@@ -12,7 +14,13 @@ func Auth(service authservice.Service) echo.MiddlewareFunc {
 		SigningKey:    []byte("jwt_secret"),
 		SigningMethod: "HS256",
 		ParseTokenFunc: func(c echo.Context, auth string) (interface{}, error) {
-			claims, err := service.ParseToken(auth)
+			// Check for both Authorization header and Bearer token in the request body
+			token := auth
+			if token == "" && c.Request().Header.Get("Authorization") != "" {
+				token = c.Request().Header.Get("Authorization")
+			}
+			log.Println("token >>>>>", token)
+			claims, err := service.ParseToken(token)
 			if err != nil {
 				return nil, err
 			}

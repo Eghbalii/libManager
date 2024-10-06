@@ -7,6 +7,7 @@ import (
 	bookhandler "github.com/eghbalii/libManager/delivery/httpserver/bookHandler"
 	searchhandler "github.com/eghbalii/libManager/delivery/httpserver/searchHandler"
 	"github.com/eghbalii/libManager/delivery/httpserver/userHandler"
+	_ "github.com/eghbalii/libManager/docs"
 	"github.com/eghbalii/libManager/service/authorizationservice"
 	"github.com/eghbalii/libManager/service/authservice"
 	"github.com/eghbalii/libManager/service/bookservice"
@@ -16,6 +17,7 @@ import (
 	"github.com/eghbalii/libManager/validator/uservalidator"
 	"github.com/labstack/echo/v4"
 	md "github.com/labstack/echo/v4/middleware"
+	echoSwagger "github.com/swaggo/echo-swagger"
 )
 
 type Server struct {
@@ -43,6 +45,9 @@ func (s Server) Serve(port int) {
 	s.Router.Use(md.RequestID())
 	s.Router.Use(md.Logger())
 	s.Router.Use(md.Recover())
+
+	// swagger
+	s.Router.GET("/swagger/*", echoSwagger.WrapHandler)
 
 	s.userHandler.SetRoutes(s.Router)
 	s.bookHandler.SetRoutes(s.Router)

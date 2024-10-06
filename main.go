@@ -17,8 +17,20 @@ import (
 	"github.com/eghbalii/libManager/validator/uservalidator"
 )
 
+// @title			Swagger LibManager API
+// @version		1.0
+// @description	This is an order Api for LibManager server.
+// @license		Apache 2.0
+// securityDefinitions.apikey JWT
+// @in header
+// @name Authorization
 func main() {
-	// http.ListenAndServe(":8090", nil)
+
+	// e := echo.New()
+
+	// e.GET("/swagger/*", echoSwagger.WrapHandler)
+
+	// e.Logger.Fatal(e.Start(":1323"))
 
 	authSvc, authorizationSvc, userSvc, userValidator, bookSvc, bookValidator, searchSvc := setupService()
 	server := httpserver.New(authSvc, authorizationSvc, userSvc, userValidator, bookSvc, bookValidator, searchSvc)

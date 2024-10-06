@@ -1,0 +1,336 @@
+definitions:
+  entity.Book:
+    properties:
+      author:
+        type: string
+      borrowDate:
+        type: string
+      borrower:
+        type: string
+      id:
+        type: string
+      isbn:
+        type: string
+      publishDate:
+        type: string
+      publisher:
+        type: string
+      reserver:
+        type: string
+      returnDate:
+        type: string
+      status:
+        $ref: '#/definitions/entity.BookStatus'
+      title:
+        type: string
+    type: object
+  entity.BookStatus:
+    enum:
+    - 1
+    - 2
+    - 3
+    type: integer
+    x-enum-varnames:
+    - Available
+    - Borrowed
+    - Reserved
+  param.LoginRequest:
+    properties:
+      password:
+        type: string
+      phone_number:
+        type: string
+    type: object
+  param.LoginResponse:
+    properties:
+      access_token:
+        type: string
+      user:
+        $ref: '#/definitions/param.UserInfo'
+    type: object
+  param.ProfileResponse:
+    properties:
+      name:
+        type: string
+    type: object
+  param.RegisterRequest:
+    properties:
+      name:
+        type: string
+      password:
+        type: string
+      phone_number:
+        type: string
+    type: object
+  param.RegisterResponse:
+    properties:
+      user:
+        $ref: '#/definitions/param.UserInfo'
+    type: object
+  param.UserInfo:
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+      phone_number:
+        type: string
+    type: object
+info:
+  contact: {}
+  description: This is an order Api for LibManager server.
+  title: Swagger LibManager API
+  version: "1.0"
+paths:
+  /books:
+    get:
+      consumes:
+      - application/json
+      description: List all books
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/entity.Book'
+            type: array
+      summary: List all books
+      tags:
+      - book
+    post:
+      consumes:
+      - application/json
+      description: Add new book
+      parameters:
+      - description: book
+        in: body
+        name: book
+        required: true
+        schema:
+          $ref: '#/definitions/entity.Book'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/entity.Book'
+      summary: Add new book
+      tags:
+      - book
+  /books/:
+    delete:
+      consumes:
+      - application/json
+      description: Delete book by Admin
+      parameters:
+      - description: bookID
+        in: query
+        name: bookID
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Delete book
+      tags:
+      - book
+    put:
+      consumes:
+      - application/json
+      description: Update book by Admin
+      parameters:
+      - description: book
+        in: body
+        name: book
+        required: true
+        schema:
+          $ref: '#/definitions/entity.Book'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entity.Book'
+      summary: Update book
+      tags:
+      - book
+  /books/borrow:
+    post:
+      consumes:
+      - application/json
+      description: Borrow a book
+      parameters:
+      - description: bookID
+        in: body
+        name: bookID
+        required: true
+        schema:
+          type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Borrow a book
+      tags:
+      - book
+  /books/reserve:
+    post:
+      consumes:
+      - application/json
+      description: Reserve a book
+      parameters:
+      - description: bookID
+        in: body
+        name: bookID
+        required: true
+        schema:
+          type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Reserve a book
+      tags:
+      - book
+  /books/return:
+    post:
+      consumes:
+      - application/json
+      description: Return a book
+      parameters:
+      - description: bookID
+        in: body
+        name: bookID
+        required: true
+        schema:
+          type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Return a book
+      tags:
+      - book
+  /search/author:
+    get:
+      consumes:
+      - application/json
+      description: Search book by author
+      parameters:
+      - description: author
+        in: query
+        name: author
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/entity.Book'
+            type: array
+      summary: Search book by author
+      tags:
+      - search
+  /search/title:
+    get:
+      consumes:
+      - application/json
+      description: Search book by title
+      parameters:
+      - description: title
+        in: query
+        name: title
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/entity.Book'
+            type: array
+      summary: Search book by title
+      tags:
+      - search
+  /users/login:
+    post:
+      consumes:
+      - application/json
+      description: Get user data and login in system
+      parameters:
+      - description: User data
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/param.LoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/param.LoginResponse'
+      summary: Login user in system
+      tags:
+      - User
+  /users/profile:
+    get:
+      description: Get user profile
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/param.ProfileResponse'
+      security:
+      - JWT: []
+      summary: Get user profile
+      tags:
+      - User
+  /users/register:
+    post:
+      consumes:
+      - application/json
+      description: Get user data and register in system
+      parameters:
+      - description: User data
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/param.RegisterRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/param.RegisterResponse'
+      summary: Register user in system
+      tags:
+      - User
+swagger: "2.0"

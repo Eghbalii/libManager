@@ -9,6 +9,16 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
+// BorrowBook Borrow a book
+// @Summary Borrow a book
+// @Description Borrow a book
+// @Tags book
+// @Accept json
+// @Produce json
+// @Param bookID body string true "bookID"
+// @Success 200 {string} message
+// Security JWT
+// @Router /books/borrow [post]
 func (h Handler) BorrowBook(c echo.Context) error {
 	req := new(book.BorrowBookRequest)
 	if err := c.Bind(req); err != nil {
@@ -33,6 +43,16 @@ func (h Handler) BorrowBook(c echo.Context) error {
 	return c.JSON(http.StatusOK, echo.Map{"message": "book borrowed successfully"})
 }
 
+// ReturnBook Return a book
+// @Summary Return a book
+// @Description Return a book
+// @Tags book
+// @Accept json
+// @Produce json
+// @Param bookID body string true "bookID"
+// @Success 200 {string} message
+// Security JWT
+// @Router /books/return [post]
 func (h Handler) ReturnBook(c echo.Context) error {
 	req := new(book.ReturnBookRequest)
 	if err := c.Bind(req); err != nil {
@@ -56,6 +76,16 @@ func (h Handler) ReturnBook(c echo.Context) error {
 	return c.JSON(http.StatusOK, echo.Map{"message": "book returned successfully"})
 }
 
+// ReserveBook Reserve a book
+// @Summary Reserve a book
+// @Description Reserve a book
+// @Tags book
+// @Accept json
+// @Produce json
+// @Param bookID body string true "bookID"
+// @Success 200 {string} message
+// Security JWT
+// @Router /books/reserve [post]
 func (h Handler) ReserveBook(c echo.Context) error {
 	req := new(book.ReserveBookRequest)
 	if err := c.Bind(req); err != nil {

@@ -8,6 +8,15 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
+// UserProfile Get user profile
+//
+//	@Summary		Get user profile
+//	@Description	Get user profile
+//	@Tags			User
+//	@Produce		json
+//	@security		JWT
+//	@Success		200	{object}	param.ProfileResponse
+//	@Router			/users/profile [get]
 func (h Handler) userProfile(c echo.Context) error {
 	claims := c.Get("claims").(*authservice.Claims)
 	resp, err := h.userSvc.Profile(c.Request().Context(),
